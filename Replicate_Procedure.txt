@@ -1,0 +1,35 @@
+Step 1:
+Install Docker: https://docs.docker.com/engine/install/
+Then Run it locally.
+
+Step 2:
+Open the prj in Docker Dev Mode
+
+Step 3:
+Install Miniconda: 
+wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+bash Miniconda3-latest-Linux-x86_64.sh -b -p $HOME/miniconda
+export PATH="$HOME/miniconda/bin:$PATH"
+conda init bash
+
+Activate env:
+conda env create -f environment.yml
+Activate using conda activate swe-agent
+
+Step 4:
+Run ./setup.sh to create the swe-agent docker image
+
+Step 5:
+Create a keys.cfg file at the root of this repository
+content:
+GITHUB_TOKEN: 'GitHub Token Here (optional)'
+OPENAI_API_KEY: 'OpenAI API Key Here if using OpenAI Model (optional)'
+
+Inference:
+python run.py --model_name gpt4 \
+  --data_path githubRepo \
+  --config_file config/default_from_url.yaml
+
+Evluation:
+cd evaluation/
+./run_eval.sh <predictions_path>
